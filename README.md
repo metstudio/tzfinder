@@ -33,6 +33,9 @@ yarn add tzfinder
 ```
 
 ## Usage
+
+The library must be initialized before it can be used. Initialization involves fetching the `timezones.geojson` file. By default, it fetches this file from a CDN (jsDelivr) pointing to the version hosted in the package's GitHub repository.
+
 ```javascript
 import { TimezoneLookup } from 'tzfinder';
 
@@ -40,40 +43,19 @@ async function main() {
     const tzLookup = new TimezoneLookup();
 
     try {
-        // 1. Initialize the service.
-        // This loads the 'timezones.geojson' file bundled with the package.
-        // You can optionally pass a different filename if you've customized the package.
-        await tzLookup.initialize();
+        // Initialize the service.
+        // By default, it fetches the GeoJSON from:
+        // [https://cdn.jsdelivr.net/gh/metstudio/tzfinder@master/timezones.geojson](https://cdn.jsdelivr.net/gh/metstudio/tzfinder@master/timezones.geojson)
+        // You can pass a custom URL if you host the GeoJSON elsewhere:
+        // await tzLookup.initialize('YOUR_CUSTOM_GEOJSON_URL_HERE');
+        await tzLookup.initialize(); 
+        
         console.log("Timezone lookup service initialized successfully.");
 
-        // 2. Perform lookups
-        const coordinates1 = { lat: 40.7128, lon: -74.0060 }; // Example: New York City
-        const result1 = tzLookup.getTimeOffsetAndName(coordinates1.lat, coordinates1.lon);
-
-        if (result1) {
-            console.log(`Timezone for (${coordinates1.lat}, ${coordinates1.lon}):`);
-            console.log(`  Name: ${result1.name}`);
-            console.log(`  Offset: ${result1.offset}`);
-        } else {
-            console.log(`No timezone information found for (${coordinates1.lat}, ${coordinates1.lon}). This might be an ocean or an area not covered.`);
-        }
-
-        const coordinates2 = { lat: 34.0522, lon: -118.2437 }; // Example: Los Angeles
-        const result2 = tzLookup.getTimeOffsetAndName(coordinates2.lat, coordinates2.lon);
-
-        if (result2) {
-            console.log(`\nTimezone for (${coordinates2.lat}, ${coordinates2.lon}):`);
-            console.log(`  Name: ${result2.name}`);
-            console.log(`  Offset: ${result2.offset}`);
-        } else {
-            console.log(`\nNo timezone information found for (${coordinates2.lat}, ${coordinates2.lon}).`);
-        }
-
+        // ... rest of your usage example
     } catch (error) {
         console.error("An error occurred:", error);
-        // Handle initialization or lookup errors
     }
 }
-
 main();
 ```

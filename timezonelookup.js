@@ -1,20 +1,17 @@
-// File: timezoneLookup.js
+// File: timezoneLookup.js (in your tzfinder package)
 import * as turf from '@turf/turf';
-import fs from 'node:fs/promises'; // For reading files in Node.js
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
-// Helper to get the directory name in ES modules (equivalent to __dirname)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// --- Define the default URL for your GeoJSON file ---
+// Using jsDelivr pointing to your GitHub repo's master branch.
+// For production stability, consider using a specific Git tag or commit hash instead of @master
+// e.g., https://cdn.jsdelivr.net/gh/metstudio/tzfinder@v1.0.2/timezones.geojson (if v1.0.2 is a tag)
+const DEFAULT_GEOJSON_URL = 'https://cdn.jsdelivr.net/gh/metstudio/tzfinder@master/timezones.geojson';
 
 export class TimezoneLookup {
     constructor() {
         this.timezoneFeatures = null;
         this.isReady = false;
 
-        // Turf.js is now an NPM dependency, so this check might be less critical
-        // as module resolution failure would typically prevent the script from running.
         if (!turf || typeof turf.point !== 'function') {
             const errorMsg = "Turf.js module not loaded correctly.";
             console.error(errorMsg);
@@ -23,42 +20,50 @@ export class TimezoneLookup {
     }
 
     /**
-     * Initializes the module by loading the bundled GeoJSON data.
+     * Initializes the module by fetching and parsing the GeoJSON data.
      * Must be called and awaited before getTimeOffsetAndName can be used.
-     * @param {string} geojsonFilename - The name of the GeoJSON file bundled with the package.
-     * Defaults to 'timezones.geojson'.
+     * @param {string} [geojsonUrl=DEFAULT_GEOJSON_URL] - The URL from where the timezones.geojson file can be fetched.
+     * Defaults to the jsDelivr URL pointing to the package's GeoJSON.
      * @returns {Promise<void>}
      */
-    async initialize(geojsonFilename = 'timezones.geojson') {
+    async initialize(geojsonUrl = DEFAULT_GEOJSON_URL) {
         if (this.isReady) {
             console.log("TimezoneLookup is already initialized.");
             return;
         }
-
-        // Construct the absolute path to the GeoJSON file within the package
-        const internalGeojsonPath = path.join(__dirname, geojsonFilename);
+        if (!geojsonUrl || typeof geojsonUrl !== 'string') {
+            this.isReady = false;
+            const errorMsg = "TimezoneLookup: geojsonUrl parameter must be a valid string.";
+            console.error(errorMsg, "Received:", geojsonUrl);
+            throw new Error(errorMsg);
+        }
 
         try {
-            const fileContent = await fs.readFile(internalGeojsonPath, 'utf-8');
-            const geojsonData = JSON.parse(fileContent);
+            console.log(`TimezoneLookup: Fetching GeoJSON from ${geojsonUrl}`);
+            const response = await fetch(geojsonUrl);
+            if (!response.ok) {
+                this.isReady = false;
+                throw new Error(`Failed to fetch GeoJSON from ${geojsonUrl}: ${response.status} ${response.statusText}`);
+            }
+            const geojsonData = await response.json();
 
             if (!geojsonData || !geojsonData.features || !Array.isArray(geojsonData.features)) {
                 this.isReady = false;
-                throw new Error("Invalid GeoJSON data structure in the bundled file.");
+                throw new Error("Invalid GeoJSON data structure from fetched file.");
             }
             this.timezoneFeatures = geojsonData.features;
             this.isReady = true;
-            console.log(`TimezoneLookup: Initialized with ${this.timezoneFeatures.length} features from ${internalGeojsonPath}.`);
+            console.log(`TimezoneLookup: Initialized with ${this.timezoneFeatures.length} features from ${geojsonUrl}.`);
         } catch (e) {
             this.isReady = false;
-            console.error(`TimezoneLookup: Error initializing with GeoJSON file '${internalGeojsonPath}':`, e);
-            throw new Error(`Failed to load or parse bundled GeoJSON: ${e.message}`);
+            console.error(`TimezoneLookup: Error initializing with GeoJSON from '${geojsonUrl}':`, e);
+            throw e;
         }
     }
 
     /**
-     * Finds the timezone name and UTC offset for the given coordinates.
-     * Call after initialize() has completed.
+     * Finds the timezone name and UTC offset for the given geographic coordinates.
+     * (Internal logic of this method remains the same)
      * @param {number} lat - Latitude.
      * @param {number} lon - Longitude.
      * @returns {{name: string, offset: string}|null}

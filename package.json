@@ -1,6 +1,6 @@
 {
   "name": "tzfinder",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A library to find timezone name and offset from latitude/longitude using a bundled GeoJSON.",
   "main": "timezoneLookup.js",
   "type": "module",

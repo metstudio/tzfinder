@@ -1,14 +1,15 @@
+import {
+    booleanPointInPolygon as BooleanPointInPolygon, 
+    point as Point
+}  from '@turf/turf';
+import tzPolygons from './ne_10m_time_zones.json' with { type: 'json' };
 
-import {booleanPointInPolygon as BooleanPointInPolygon, point as Point}  from '@turf/turf';
-import timezonesGeojsonStr from './timezones.geojson.js';
-
-const tzPolygons  = JSON.parse(timezonesGeojsonStr)
 
 function getTimeZoneOffsetByLatLng(lat, lon){
 
 
-    if (typeof lat !== 'number' || isNaN(lat) || typeof lon !== 'number' || isNaN(lon)) {
-        console.error("TimezoneLookup: Invalid latitude or longitude.");
+    if (typeof(lat) !== 'number' || isNaN(lat) || typeof(lon) !== 'number' || isNaN(lon)) {
+        console.error("tzfinder: Invalid latitude or longitude.");
         return null;
     }
 
@@ -23,6 +24,10 @@ function getTimeZoneOffsetByLatLng(lat, lon){
 
         }
     }
+
+    console.error(`tzfinder: No timezone found for the given coordinates: (lat: ${lat}, lon: ${lon})`);
+    
+    return null;
 }
 
 

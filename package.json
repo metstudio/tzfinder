@@ -1,11 +1,11 @@
 {
   "name": "tzfinder",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A library to find timezone name and offset from latitude/longitude using a bundled GeoJSON.",
-  "main": "timezoneLookup.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/test.js"
   },
   "repository": {
     "type": "git",
@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/munim110/tzfinder#readme",
   "files": [
-    "timezoneLookup.js",
-    "timezones.geojson"
+    "src/",
+    "tests/"
   ],
   "dependencies": {
     "@turf/turf": "^6.5.0"

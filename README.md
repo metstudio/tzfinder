@@ -34,7 +34,7 @@ yarn add tzfinder
 
 ## Usage
 ```javascript
-import { TimezoneLookup } from 'tzfinder'; // Replace 'tzfinder' with the actual package name
+import { TimezoneLookup } from 'tzfinder';
 
 async function main() {
     const tzLookup = new TimezoneLookup();

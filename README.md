@@ -51,8 +51,13 @@ async function main() {
         await tzLookup.initialize(); 
         
         console.log("Timezone lookup service initialized successfully.");
+        // Example coordinates for New York City
+        const lat = 40.7128; // Latitude for New York City
+        const lon = -74.0060; // Longitude for New York City
+        const { timezoneName, utcOffset } = await tzLookup.getTimeOffsetAndName(lat, lon);
+        console.log(`Timezone Name: ${timezoneName}`); // e.g., "America/New_York"
+        console.log(`UTC Offset: ${utcOffset}`); // e.g., "UTC-05:00"
 
-        // ... rest of your usage example
     } catch (error) {
         console.error("An error occurred:", error);
     }

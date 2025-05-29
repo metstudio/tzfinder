@@ -3,8 +3,8 @@
 [![NPM version](https://img.shields.io/npm/v/tzfinder.svg?style=flat)](https://www.npmjs.com/package/tzfinder)
 [![NPM downloads](https://img.shields.io/npm/dm/tzfinder.svg?style=flat)](https://www.npmjs.com/package/tzfinder)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub issues](https://img.shields.io/github/issues/your-username/your-repo-name.svg)](https://github.com/your-username/your-repo-name/issues)
-[![GitHub stars](https://img.shields.io/github/stars/your-username/your-repo-name.svg)](https://github.com/your-username/your-repo-name/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/munim110/tzfinder.svg)](https://github.com/munim110/tzfinder/issues)
+[![GitHub stars](https://img.shields.io/github/stars/munim110/tzfinder.svg)](https://github.com/munim110/tzfinder/stargazers)
 
 **`tzfinder`** is a Node.js library designed to determine the IANA timezone name (e.g., "America/New_York") and current UTC offset (e.g., "UTC-05:00") from geographic coordinates (latitude and longitude). It utilizes a bundled GeoJSON file containing timezone boundary data (derived from sources like Natural Earth) and leverages [Turf.js](https://turfjs.org/) for spatial analysis.
 
@@ -34,7 +34,7 @@ yarn add tzfinder
 
 ## Usage
 ```javascript
-import { TimezoneLookup } from 'your-package-name'; // Replace 'your-package-name' with the actual package name
+import { TimezoneLookup } from 'tzfinder'; // Replace 'tzfinder' with the actual package name
 
 async function main() {
     const tzLookup = new TimezoneLookup();

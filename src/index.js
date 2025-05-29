@@ -7,8 +7,8 @@ const tzPolygons  = JSON.parse(timezonesGeojsonStr)
 function getTimeZoneOffsetByLatLng(lat, lon){
 
 
-    if (typeof lat !== 'number' || isNaN(lat) || typeof lon !== 'number' || isNaN(lon)) {
-        console.error("TimezoneLookup: Invalid latitude or longitude.");
+    if (typeof(lat) !== 'number' || isNaN(lat) || typeof(lon) !== 'number' || isNaN(lon)) {
+        console.error("tzfinder: Invalid latitude or longitude.");
         return null;
     }
 
@@ -23,6 +23,10 @@ function getTimeZoneOffsetByLatLng(lat, lon){
 
         }
     }
+
+    console.error(`tzfinder: No timezone found for the given coordinates: (lat: ${lat}, lon: ${lon})`);
+    
+    return null;
 }
 
 

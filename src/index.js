@@ -1,8 +1,9 @@
+import {
+    booleanPointInPolygon as BooleanPointInPolygon, 
+    point as Point
+}  from '@turf/turf';
+import tzPolygons from './ne_10m_time_zones.json' with { type: 'json' };
 
-import {booleanPointInPolygon as BooleanPointInPolygon, point as Point}  from '@turf/turf';
-import timezonesGeojsonStr from './timezones.geojson.js';
-
-const tzPolygons  = JSON.parse(timezonesGeojsonStr)
 
 function getTimeZoneOffsetByLatLng(lat, lon){
 

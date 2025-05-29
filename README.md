@@ -50,3 +50,12 @@ function main() {
 }
 main();
 ```
+
+## Properties 
+* **name:** Timezone offset in string format (e.g. '+6', '-9')
+* **zone:** Timezone offset in integer format (e.g. 6, -9)
+* **utc_format:** Timezone offset in UTC format string (e.g. 'UTC-02:00', 'UTC+06:00')
+* **time_zone:** Timezone offset in UTC format string (e.g. 'UTC-02:00', 'UTC+06:00')
+* **iso_8601:** Timezone offset in iso_8601 format string (e.g. 'UTC-02:00', 'UTC+06:00')
+* **places:** A list of some places with this timezone (e.g., 'Estonia, Finland, Latvia, Lithuania')
+* **tz_name1st** Timezone name of the timezone (e.g., 'Asia/Dhaka', 'Europe/Helsinki')

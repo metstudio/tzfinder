@@ -14,7 +14,7 @@ This package is ideal for server-side applications or build processes where you 
 
 * **Offline Lookup:** Performs timezone lookups locally using a bundled GeoJSON data file.
 * **IANA Timezone Name & UTC Offset:** Returns both the descriptive timezone name and its current UTC offset.
-* **Simple API:** Easy to initialize and use with a straightforward `getTimeOffsetAndName(lat, lon)` method.
+* **Simple API:** Easy to initialize and use with a straightforward `getTimeZoneOffsetByLatLng(lat, lon)` method.
 * **ES Module:** Modern JavaScript module for easy integration.
 * **Dependency on Turf.js:** Uses the robust Turf.js library for point-in-polygon operations.
 
